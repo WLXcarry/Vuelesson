@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>positon</title>
+	<!--<script src="position.js"></script>-->
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0jGgWtGVNGAKPb5Gpy3KDu5YvzhdQXcr"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0jGgWtGVNGAKPb5Gpy3KDu5YvzhdQXcr"></script>
+	<script>
+var setCookie = function(name, value) {
+            var Days = 30;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+        };
+        var geolocation = new BMap.Geolocation();
+        //弹出地理授权
+        geolocation.getCurrentPosition(function(r) {
+                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                    alert('定位成功');
+                    console.log(r.point);
+					var map = new BMap.Map("allmap");
+					var point = new BMap.Point(121.59,38.94);
+    				map.centerAndZoom(point,12);
+					var mk = new BMap.Marker(r.point);
+					map.addOverlay(mk);//标出所在地
+            		map.panTo(r.point);//地图中心移动
+                } else {
+                    alert("baidu return failed");
+                }
+            },
+            //获取失败时候的回调
+            function(r) {
+                console.log(r);
+                alert('定位失败');
+                return {
+                    //设置高精度
+                    enableHighAccuracy: true
+                };
+            }
+        );
+    </script>
+	<link rel="stylesheet" href="position.css">
+</head>
+
+<body>
+	<div id="location">you position is here</div>
+	<div id="allmap" style="width: 100%;height: 560px;border: 1px solid #cccccc"></div>
+</body>
+</html>
+yh7
